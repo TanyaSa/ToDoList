@@ -1,0 +1,45 @@
+/*li:hover {color: darkviolet; text-decoration:none}
+
+/*
+.items li{
+    color: gold;
+}
+
+*/
+
+
+/*
+li+li{
+    color: aqua;
+}
+*/
+
+
+
+li {
+    list-style-type: none;
+}
+
+
+.done {
+    color: black;
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+#list {
+    
+    text-align: left;
+    font-size: 20px;
+    line-height: 2.25;
+    width: 700px;
+    background-color:rgba(255,255,224,0.8);
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+#list ul {
+    padding: 40px;
+    margin: 20px;
+}

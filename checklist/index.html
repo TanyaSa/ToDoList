@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Lololo</title>
+    <style>
+        body {
+            background-image: url(images/background78.png);
+            background-color: orange;
+            font-family: "Comic Sans MS";
+            color: darkslategrey;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+
+</head>
+
+<body>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+
+
+    <p style="text-align: center; font-size: 45px; color: white; font-weight:500;">My checklist:</p>
+
+    <div id="list">
+        <ul id="checklist">
+
+            <li>
+                <input type="checkbox" class="checkbox form-check-input" id="flexCheckDefault"> View list of the items
+            </li>
+            <li>
+                <input type="checkbox" class="checkbox form-check-input" id="flexCheckDefault"> Mark item as 'Done' (item should be strikethrough and change opacity)
+            </li>
+            <li>
+                <input type="checkbox" class="checkbox form-check-input" id="flexCheckDefault"> Add new item
+            </li>
+            <li>
+                <input type="checkbox" class="checkbox form-check-input" id="flexCheckDefault"> Edit an item
+            </li>
+            <li>
+                <input type="checkbox" class="checkbox form-check-input" id="flexCheckDefault"> Delete an item
+            </li>
+        </ul>
+
+
+        <input type="button" value="+add new item" id="newItem">
+
+
+
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+            </div>
+            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-text">
+                <input class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input">
+            </div>
+            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+        </div>
+
+    </div>
+
+    <!-- <input id="add" placeholder="Enter new item...">-->
+    <script src="my.js"></script>
+
+</body>
+
+</html>
