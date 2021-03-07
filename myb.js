@@ -57,37 +57,12 @@ addButton.addEventListener('click', addItemHandler);
 //listener for clicking on checkboxes
 */
 
-var liststorage =  JSON.parse(localStorage.getItem("Value"));
-// var todoList = [{ text: 'TEST', isCompleted: true }];
-todoList = []
 
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    const view = new View();
-
- 
     var application = new Application();
     // application.model.todoList.push({ text: 'TEST', isCompleted: true });
-    // application.start();
-    if ( localStorage.getItem("Value") != null){
-        for (let i = 0; i < this.liststorage.length; i++){
-            view.renderTodoItem(this.liststorage[i])
-
-        }
-        application.start();
-        localStorage.setItem('Value', JSON.stringify(this.liststorage));
-    
-    }else{
-        // this.todoList.push({ text: 'TEST', isCompleted: true });
-        application.model.todoList.push({ text: 'TEST', isCompleted: true });
-        for (let i = 0; i < this.todoList.length; i++){
-            
-            view.renderTodoItem(this.todoList[i])
-        }
-        localStorage.setItem('Value', JSON.stringify(this.todoList));
-
-    }
+    application.start();
 });
 
 
@@ -97,7 +72,6 @@ class Application {
         this.view = new View(this.model);
         this.controller = new Controller(this.view, this.model);
 
-        this.liststorage = liststorage
     }
 
     start() {
@@ -109,6 +83,7 @@ class View {
     model;
     checklist;
     addButton;
+
     events = {};
 
     // TODO
@@ -122,8 +97,6 @@ class View {
     // value types vs reference types
 
     constructor(model) {
-        this.liststorage = liststorage;
-
         this.model = model;
         this.checklist = document.querySelector('#checklist');
         this.addButton = document.querySelector('#addbutton');
@@ -148,23 +121,26 @@ class View {
     }
 
     refreshView() {
-        console.log("refesh")
         this.checklist.innerHTML = "";
-
-        // for (let i = 0; i < this.model.todoList.length; i++) {
-        //     let currentTodoItem = this.model.todoList[i];
-        //     this.renderTodoItem(currentTodoItem);
-        // }    //Tanya
-
+        console.log(this.model.todoList);
+        if(localStorage.getItem("Value")!= null){
+            this.model.todoList = JSON.parse(localStorage.getItem("Value"))
+            for (let i = 0; i < this.model.todoList.length; i++) {
+                let currentTodoItem = this.model.todoList[i];
+                this.renderTodoItem(currentTodoItem);
+                console.log(this.model.todoList);
+                localStorage.setItem("Value", JSON.stringify(this.model.todoList))
+            }
+        }else{
+            this.model.todoList.push({ text: 'TEST', isCompleted: true });
+            for (let i = 0; i < this.model.todoList.length; i++) {
+                let currentTodoItem = this.model.todoList[i];
+                this.renderTodoItem(currentTodoItem);
+            }
+            console.log(this.model.todoList);
+            localStorage.setItem("Value", JSON.stringify(this.model.todoList))
+        }
        
-
-          for (let i = 0; i < this.liststorage.length; i++) {
-            // let currentTodoItem = this.model.todoList[i];
-            this.renderTodoItem(this.liststorage[i]);
-           
-        } //Alina
-        localStorage.setItem('Value', JSON.stringify(this.liststorage));
-        console.log(this.liststorage)
     };
 
     renderTodoItem(todoItem) {
@@ -249,18 +225,14 @@ class Controller {
 
 //let itemId = 0; 
 class Model {
-    // todoList = [];
-    // todoList
-  
+    todoList = [];
+
+
     constructor() {
-        // this.view = view;
-
-
-        this.todoList = todoList;
         var itemsKeys = Object.keys(localStorage);
-        // for (let j = 0; j < itemsKeys.length; j++) {
-        //     this.todoList.push(JSON.parse(localStorage[itemsKeys[j]]));
-        // }
+        for (let j = 0; j < itemsKeys.length; j++) {
+            this.todoList.push(JSON.parse(localStorage[itemsKeys[j]]));
+        }
     }
 
 
@@ -277,24 +249,13 @@ class Model {
     }
 
     deleteItem(item) {
-        this.todoList = JSON.parse(localStorage.getItem("Value"));
-        console.log(item.text)
-        // let index = this.todoList.indexOf(item);
-        // console.log(index)
-        // if (index != -1) {
-        //     this.todoList.splice(index, 1);
-        //     // save to local storage
-        //     localStorage.removeItem('Value');
-        //     localStorage.setItem('Value', JSON.stringify(this.todoList));
-        // }
-        for(var i = 0; i < this.todoList.length; i++) {
-            if(this.todoList.text == item.text) {
-                // this.todoList[i]
-                this.todoList.splice(this.todoList[i], 1);
-            }
-         }
-        console.log(this.todoList)
-        // this.view.refreshView();
+        const index = this.todoList.indexOf(item);
+        if (index > -1) {
+            this.todoList.splice(index, 1);
+            // save to local storage
+            localStorage.removeItem('Value');
+            localStorage.setItem('Value', JSON.stringify(this.todoList));
+        }
     }
 
     updateItem(item) {
