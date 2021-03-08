@@ -142,8 +142,10 @@ class View {
                 let currentTodoItem = this.model.todoList[i];
                 this.renderTodoItem(currentTodoItem);
                 console.log(this.model.todoList);
-                if(this.model.todoList.length < 2){
+                if(this.model.todoList.length < 2 && this.model.todoList.length != 0){
                     this.count.innerHTML = this.model.todoList.length + " " + "Task";
+                }else if(this.model.todoList.length == 0){
+                    this.count.innerHTML = "0" + " " + "Tasks";
                 }else{
                     this.count.innerHTML = this.model.todoList.length + " " + "Tasks";
                 }
@@ -154,8 +156,10 @@ class View {
             for (let i = 0; i < this.model.todoList.length; i++) {
                 let currentTodoItem = this.model.todoList[i];
                 this.renderTodoItem(currentTodoItem);
-                if(this.model.todoList.length < 2){
+                if(this.model.todoList.length < 2 && this.model.todoList.length != 0){
                     this.count.innerHTML = this.model.todoList.length + " " + "Task";
+                }else if(this.model.todoList.length == 0){
+                    this.count.innerHTML = "0" + " " + "Tasks";
                 }else{
                     this.count.innerHTML = this.model.todoList.length + " " + "Tasks";
                 }

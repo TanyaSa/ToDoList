@@ -108,7 +108,7 @@
     .addBtn{
         position: absolute;
         bottom: -25px;
-        right: 30px;
+        right: 20px;
         border-radius: 50%;
         width: 50px;
         height: 50px;
@@ -135,3 +135,51 @@
         padding: 20px 20px;
         margin-bottom:unset !important;
     }
+
+/* media */
+
+@media screen and (max-width: 730px){
+    .inner_card {
+        width: 600px;
+    }
+}
+@media screen and (max-width: 650px){
+    .inner_card {
+        width: 500px;
+    }
+}
+@media screen and (max-width: 560px){
+    .inner_card {
+        width: 400px;
+    }
+    h1{
+        font-size: 25px;
+    }
+}
+@media screen and (max-width: 450px){
+    .inner_card {
+        width: 350px;
+    }
+}
+@media screen and (max-width: 400px){
+    .inner_card {
+        width: 300px;
+    }
+}
+@media screen and (max-width: 350px){
+    .inner_card {
+        width: 270px;
+    }
+    h1{
+        font-size: 20px;
+    }
+    .month{
+        font-size: 15px;
+    }
+    .addBtn {
+        bottom: -16px;
+        right: 20px;
+        width: 35px;
+        height: 35px;
+    }
+}
