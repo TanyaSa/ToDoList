@@ -60,6 +60,16 @@ addButton.addEventListener('click', addItemHandler);
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    var date = document.querySelector('.title_text');
+    var month = document.querySelector('.month');
+    var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var months = ["January", "February", "March", "April", "May", "June", 
+            "July", "August", "September", "October", "November", "December"];
+    dateNow = new Date();
+    var n = weekday[dateNow.getDay()];
+    var day = dateNow.getDate();
+    date.innerHTML =  n + "," + " " + day + 'th';
+    month.innerHTML = months[dateNow.getMonth()];
     var application = new Application();
     // application.model.todoList.push({ text: 'TEST', isCompleted: true });
     application.start();
@@ -98,8 +108,10 @@ class View {
 
     constructor(model) {
         this.model = model;
+        // this.titleToDO = document.querySelector('.title_todo');
         this.checklist = document.querySelector('#checklist');
         this.addButton = document.querySelector('#addbutton');
+        this.count = document.querySelector('.count');
         this.addButton.addEventListener('click', (e) => this.dispatch('add:todoItem', e));
     }
 
@@ -118,6 +130,7 @@ class View {
                 subscribers[i](event);
             }
         }
+      
     }
 
     refreshView() {
@@ -129,6 +142,11 @@ class View {
                 let currentTodoItem = this.model.todoList[i];
                 this.renderTodoItem(currentTodoItem);
                 console.log(this.model.todoList);
+                if(this.model.todoList.length < 2){
+                    this.count.innerHTML = this.model.todoList.length + " " + "Task";
+                }else{
+                    this.count.innerHTML = this.model.todoList.length + " " + "Tasks";
+                }
                 localStorage.setItem("Value", JSON.stringify(this.model.todoList))
             }
         }else{
@@ -136,10 +154,17 @@ class View {
             for (let i = 0; i < this.model.todoList.length; i++) {
                 let currentTodoItem = this.model.todoList[i];
                 this.renderTodoItem(currentTodoItem);
+                if(this.model.todoList.length < 2){
+                    this.count.innerHTML = this.model.todoList.length + " " + "Task";
+                }else{
+                    this.count.innerHTML = this.model.todoList.length + " " + "Tasks";
+                }
+                
             }
             console.log(this.model.todoList);
             localStorage.setItem("Value", JSON.stringify(this.model.todoList))
         }
+
        
     };
 
@@ -155,7 +180,7 @@ class View {
         checkbox.type = "checkbox";
         checkbox.attributes["aria-label"] = "Checkbox for following text input";
         checkbox.checked = todoItem.isCompleted;
-        checkbox.addEventListener('click', (e) => this.dispatch('update:todoItem', {
+        checkbox.addEventListener('click', (e) => this.dispatch('updateState:todoItem', {
             todoItem,
             newText: input.value,
             newState: checkbox.checked
@@ -167,16 +192,29 @@ class View {
         input.className = "form-control";
         input.placeholder = "Enter description here...";
         input.value = todoItem.text;
-        input.addEventListener('keyup', (e) => this.dispatch('update:todoItem', {
+        input.addEventListener('keyup', (e) => this.dispatch('updateInput:todoItem', {
             todoItem,
             newText: input.value,
             newState: checkbox.checked
         }));
 
+        // if (input.focus) {
+        //     todoItemContainer.className = "input-group mb-3 activeInput";
+        // }else{
+        //     todoItemContainer.className = "input-group mb-3";
+        // }
+        input.onfocus = function(){
+            todoItemContainer.className = "input-group mb-3 activeInput";
+        }
+        input.onblur = function(){
+            todoItemContainer.className = "input-group mb-3";
+        }
+
         let button = document.createElement("button");
-        button.className = "btn btn-outline-secondary";
+        // button.className = "btn btn-outline-secondary";
+        button.className = "btn";
         button.type = "button";
-        button.innerText = "Remove";
+        // button.innerText = "Remove";
         button.addEventListener('click', (e) => this.dispatch('delete:todoItem', todoItem));
 
         todoItemContainer.appendChild(checkBoxWrapper);
@@ -186,6 +224,17 @@ class View {
 
         let test = input.value;
         console.log(test);
+
+        if(!todoItem.isCompleted){
+            todoItemContainer.style.textDecoration = "none";   
+            
+          }else{
+             
+              todoItemContainer.style.textDecoration = "line-through";
+              todoItemContainer.style.color = "#d9d9e7";
+              input.style.color =  "#d9d9e7";
+          }
+       
     }
     updateTodoItem(e) {
         let val = e.value;
@@ -201,19 +250,30 @@ class Controller {
 
         this.view.on('add:todoItem', () => this.add());
         this.view.on('delete:todoItem', (todoItem) => this.delete(todoItem));
-        this.view.on('update:todoItem', (todoItem) => this.update(todoItem)); ///////////////////////////??????????????????????
+        this.view.on('updateState:todoItem', (todoItem) => this.updateState(todoItem)); ///////////////////////////??????????????????????
+        this.view.on('updateInput:todoItem', (todoItem) => this.updateInput(todoItem));
     }
 
     add() {
         const todoItem = this.model.createItem();
         this.view.renderTodoItem(todoItem);
+        this.view.refreshView();
     }
 
-    update(e) { /////////////////////////////////////////////////////????????????????????????????????????????????????????????????????
+    updateState(e) { /////////////////////////////////////////////////////????????????????????????????????????????????????????????????????
         let todoItem = e.todoItem;
         todoItem.text = e.newText
         todoItem.isCompleted = e.newState;
         this.model.updateItem(todoItem);
+        this.view.refreshView()
+        
+    }
+    updateInput(e) { /////////////////////////////////////////////////////????????????????????????????????????????????????????????????????
+        
+        let todoItem = e.todoItem;
+        todoItem.text = e.newText
+        todoItem.isCompleted = e.newState;
+        this.model.updateItem(todoItem); 
     }
 
     delete(todoItem) {
