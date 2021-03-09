@@ -36,17 +36,23 @@
     .outer_card{
         display: flex;
         justify-content: center;
-        background:linear-gradient(to top right, #f87375 , #5c5fe7); 
+        background:radial-gradient(ellipse at -310% 117%, #f37374 75%, #5c5fe8 -43%, #5c5fe8 -29%);
         padding: 80px 0;
         width: 100%;
         min-height: 100vh;
     }
     .btn{
-        background: url('img/trash.png');
+        
+        /* background: url('img/trash.png'); */
         background-size: contain;
         background-repeat: no-repeat;
         outline: none;
         border: none;
+        /* padding: .375rem 0 .375rem 10px; */
+    }
+    .btn::after{
+        content: "✘";
+        color: #f37374;
     }
     .title_todo{
         position: relative;
@@ -60,7 +66,8 @@
         margin-bottom: 30px;
     } */
     .title_text{
-        color: #6c92e7;
+        font-size: 35px;
+        color: #666afb;
         font-weight: 500;
     }
     .header_title{
@@ -74,10 +81,18 @@
         text-align: left;
         margin: 10px 30px;
     }
+    .time{
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        color: #d3d3e1;
+        padding: .375rem .75rem;
+    }
     .month{
         color:#cdcdd9;
     }
     .count{
+        font-size: 18px;
         color: #dbdbe9;
     }
     /* body{
@@ -92,7 +107,7 @@
         height: 100vh;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #424242;
-    } */ */
+    } */ 
     
     div.area.bg-secondary.bg-gradient.shadow.p-3.mb-5.bg-body.rounded {
         padding-top: 100px;
@@ -104,10 +119,14 @@
     }
    .activeInput{
         border-left: 5px solid #43a5fd;
-      }
+        transition:0.2s linear;
+        padding: 20px 20px 20px 15px !important;
+    }
     .addBtn{
+        display: flex;
+        justify-content: center;
         position: absolute;
-        bottom: -25px;
+        bottom: -23px;
         right: 20px;
         border-radius: 50%;
         width: 50px;
@@ -117,6 +136,7 @@
         font-weight: bolder;
         border: none;
         outline: none;
+        font-size: 23px;
     }
     .input-group-text {
         background-color: unset; 
@@ -129,12 +149,29 @@
     }
     .form-control{
         border: none;
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .form-control::placeholder{ 
+            color: #d3d3e1;
+            font-size: 15px;
+            text-decoration: none;
     }
     .mb-3 {
         border-bottom: 1px solid #e0e9f1;
         padding: 20px 20px;
         margin-bottom:unset !important;
     }
+    .form-check-input:focus{
+        box-shadow: unset;
+    }
+    .btn-check:focus+.btn, .btn:focus{
+        box-shadow: unset;
+    }
+
+
+
+
 
 /* media */
 

@@ -1,0 +1,42 @@
+class Controller {
+    constructor(view, model) {
+        this.view = view;
+        this.model = model;
+
+        this.view.on('add:todoItem', () => this.add());
+        this.view.on('delete:todoItem', (todoItem) => this.delete(todoItem));
+        this.view.on('updateState:todoItem', (todoItem) => this.updateState(todoItem)); ///////////////////////////??????????????????????
+        this.view.on('updateInput:todoItem', (todoItem) => this.updateInput(todoItem));
+    }
+
+    add() {
+        const todoItem = this.model.createItem();
+        this.view.renderTodoItem(todoItem);
+        this.model.updateItem(todoItem); 
+        this.view.refreshView();
+    }
+
+    updateState(e) { /////////////////////////////////////////////////////????????????????????????????????????????????????????????????????
+        let todoItem = e.todoItem;
+        todoItem.text = e.newText;
+        todoItem.isCompleted = e.newState;
+       
+        this.model.updateItem(todoItem);
+        this.view.refreshView()
+        
+    }
+    updateInput(e) { /////////////////////////////////////////////////////????????????????????????????????????????????????????????????????
+        
+        let todoItem = e.todoItem;
+        todoItem.text = e.newText;
+        todoItem.isCompleted = e.newState;
+      
+        this.model.updateItem(todoItem); 
+    }
+
+    delete(todoItem) {
+        console.log(todoItem);
+        this.model.deleteItem(todoItem);
+        this.view.refreshView();
+    }
+}
