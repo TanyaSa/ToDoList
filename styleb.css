@@ -36,7 +36,7 @@
     .outer_card{
         display: flex;
         justify-content: center;
-        background:radial-gradient(ellipse at -310% 117%, #f37374 75%, #5c5fe8 -43%, #5c5fe8 -29%);
+        background: linear-gradient(18deg, rgba(243,115,116,1) 43%, rgba(92,95,232,1) 43%);
         padding: 80px 0;
         width: 100%;
         min-height: 100vh;
@@ -142,6 +142,7 @@
         background-color: unset; 
         border: unset;
         border-radius: unset;
+        color: #82829c;
     }
     .form-check-input:checked {
         background-color: #fa7676;
@@ -150,7 +151,8 @@
     .form-control{
         border: none;
         font-size: 20px;
-        font-weight: 600;
+        font-weight: 500;
+        color: #82829c;
     }
     .form-control::placeholder{ 
             color: #d3d3e1;
@@ -161,6 +163,7 @@
         border-bottom: 1px solid #e0e9f1;
         padding: 20px 20px;
         margin-bottom:unset !important;
+        outline: none;
     }
     .form-check-input:focus{
         box-shadow: unset;
@@ -168,7 +171,9 @@
     .btn-check:focus+.btn, .btn:focus{
         box-shadow: unset;
     }
-
+.plus{
+    margin-top: 11%;
+}
 
 
 
@@ -189,8 +194,14 @@
     .inner_card {
         width: 400px;
     }
-    h1{
+    /* h1{
         font-size: 25px;
+    } */
+    .title_text{
+        font-size: 25px;
+    }
+    .count {
+        font-size: 15px;
     }
 }
 @media screen and (max-width: 450px){
@@ -202,6 +213,12 @@
     .inner_card {
         width: 300px;
     }
+    .title_text {
+        font-size: 18px;
+    }
+    .form-control {
+        font-size: 16px;
+    }    
 }
 @media screen and (max-width: 350px){
     .inner_card {
@@ -218,5 +235,6 @@
         right: 20px;
         width: 35px;
         height: 35px;
+        font-size: 18px;
     }
 }

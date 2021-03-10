@@ -1,5 +1,3 @@
-
-
 /*
 let checklist = document.querySelector('#checklist');
 let addButton = document.querySelector('#addbutton');
@@ -57,7 +55,6 @@ addButton.addEventListener('click', addItemHandler);
 //listener for clicking on checkboxes
 */
 
-var time = new Date();
 
 document.addEventListener("DOMContentLoaded", () => {
     var date = document.querySelector('.title_text');

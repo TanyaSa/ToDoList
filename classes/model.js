@@ -5,7 +5,9 @@ class Model {
     constructor() {
         var itemsKeys = Object.keys(localStorage);
         for (let j = 0; j < itemsKeys.length; j++) {
-            this.todoList.push(JSON.parse(localStorage[itemsKeys[j]]));
+            let item = JSON.parse(localStorage[itemsKeys[j]]);
+            item.createdAt = new Date(item.createdAt);
+            this.todoList.push(item);
         }
     }
 
@@ -34,6 +36,7 @@ class Model {
 
     updateItem(item) {
         localStorage.setItem('Value', JSON.stringify(this.todoList));
+        console.log(this.todoList)
     }
 
 }

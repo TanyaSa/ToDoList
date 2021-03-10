@@ -17,7 +17,6 @@ class View {
 
     constructor(model) {
         this.model = model;
-        this.time = time;
         // this.titleToDO = document.querySelector('.title_todo');
         this.checklist = document.querySelector('#checklist');
         this.addButton = document.querySelector('#addbutton');
@@ -29,7 +28,6 @@ class View {
         if (!this.events[eventName]) {
             this.events[eventName] = [];
         }
-
         this.events[eventName].push(callback);
     }
 
@@ -77,12 +75,13 @@ class View {
     renderTodoItem(todoItem) {
         let todoItemContainer = document.createElement("div");
         todoItemContainer.className = "input-group mb-3";
+        todoItemContainer.tabIndex = 0;
 
         let checkBoxWrapper = document.createElement('div');
         checkBoxWrapper.className = "input-group-text";
 
         let dateBox = document.createElement("div");
-        dateBox.innerHTML = todoItem.time;
+        dateBox.innerHTML = new Date(todoItem.createdAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' });
         dateBox.className = "time";
 
         let checkbox = document.createElement("input");
@@ -94,7 +93,7 @@ class View {
             todoItem,
             newText: input.value,
             newState: checkbox.checked,
-            newTime:todoItem.time
+            newTime:todoItem.createdAt
         }));
         checkBoxWrapper.appendChild(checkbox);
 
@@ -107,21 +106,17 @@ class View {
             todoItem,
             newText: input.value,
             newState: checkbox.checked,
-            newTime:todoItem.time
+            newTime:todoItem.createdAt
         }));
 
-      
-        input.onfocus = function(){
-            todoItemContainer.className = "input-group mb-3 activeInput";
-        }
-        input.onblur = function(){
-            todoItemContainer.className = "input-group mb-3";
-        }
+
 
         let button = document.createElement("button");
         button.className = "btn";
         button.type = "button";
         button.addEventListener('click', (e) => this.dispatch('delete:todoItem', todoItem));
+        dateBox.style.display = "block";
+        button.style.display = "none";
 
         todoItemContainer.appendChild(checkBoxWrapper);
         todoItemContainer.appendChild(input);
@@ -129,17 +124,102 @@ class View {
         todoItemContainer.appendChild(button);
         checklist.appendChild(todoItemContainer);
 
+    
+        input.onfocus = function(){
+            todoItemContainer.className = "input-group mb-3 activeInput";
+            input.style.color = "#82829c";
+            dateBox.style.display = "block";
+            button.style.display = "none";  
+            if(!checkbox.checked ){
+                input.style.textDecoration = "none";  
+            }else{
+                input.style.textDecoration = "line-through";
+                input.style.color = "#d9d9e7";
+            }
+
+           
+        }
+        input.onblur = function(){
+            todoItemContainer.className = "input-group mb-3";
+            dateBox.style.display = "block";
+            button.style.display = "none"; 
+        
+        }
+    //   input.addEventListener('focus', (event) => {
+    //         todoItemContainer.className = "input-group mb-3 activeInput";
+
+    //         dateBox.style.display = "none";
+    //         button.style.display = "block";  
+    //       });
+
+    //     input.addEventListener('blur', (event) => {
+    //             todoItemContainer.className = "input-group mb-3";
+    //         dateBox.style.display = "block";
+    //         button.style.display = "none"; 
+    //     });
+        
+        console.log(checklist)
         let test = input.value;
         console.log(test);
 
-        if(!todoItem.isCompleted){
-            input.style.textDecoration = "none";   
-            button.style.display = "none";
-          }else {
-            button.style.display = "block";
-              input.style.textDecoration = "line-through";
-              input.style.color = "#d9d9e7";
-        }
+   
+        if(!checkbox.checked ){
+            dateBox.style.display = "block";
+            input.style.textDecoration = "none";  
+            button.style.display = "none"; 
+            
+          }else{
+            
+            dateBox.style.display = "none";
+            input.style.textDecoration = "line-through";
+            input.style.color = "#d9d9e7";
+            button.style.display = "block";  
+        }    
+
+
+        // for (let i=0;i<this.checklist.length;i++){
+        //     if (this.checklist[i].childNodes.tagName.toString().toLowerCase() == 'div') {
+        //         checklist[i].onfocus = function(){
+        //             this.childNodes.style.border = '1px solid red';
+        //             console.log(this.parentNode)
+        //         }
+        //         checklist[i].onblur = function(){
+        //             this.childNodes.style.border = '1px dashed blue';
+        //         }
+        //     }
+        // }
+
+        // let isFocused = (document.activeElement === todoItemContainer);
+        // if(!checkbox.checked && !isFocused){
+        //     input.style.textDecoration = "none";  
+        //     // button.style.display = "none"; 
+            
+        //   }else if(!checkbox.checked && isFocused){
+        //     input.style.textDecoration = "none"; 
+        //     todoItemContainer.className = "input-group mb-3 activeInput";
+        //     dateBox.style.display = "none";
+        //     button.style.display = "block";
+            
+        //   }else if(checkbox.checked && isFocused){
+        //     // dateBox.style.display = "none";
+        //       input.style.textDecoration = "line-through";
+        //       todoItemContainer.className = "input-group mb-3 activeInput";
+        //       dateBox.style.display = "none";
+        //       button.style.display = "block";
+        //       input.style.color = "#d9d9e7";
+        //     //   button.style.display = "block"; 
+        //     }else{
+        //         input.style.textDecoration = "line-through";
+        //         input.style.color = "#d9d9e7";
+        //     }
+
+
+
+        // document.body.onclick= function(e) {
+        //     if (document.activeElement === input) {
+        //       e.preventDefault();
+        //     }
+        //   };
    
     }
     updateTodoItem(e) {
