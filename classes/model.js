@@ -36,7 +36,7 @@ class Model {
 
     updateItem(item) {
         localStorage.setItem('Value', JSON.stringify(this.todoList));
-        console.log(this.todoList)
+        // console.log(this.todoList)
     }
 
 }
