@@ -1,5 +1,3 @@
-//import view from ''
-
 /*
 let checklist = document.querySelector('#checklist');
 let addButton = document.querySelector('#addbutton');
@@ -59,8 +57,19 @@ addButton.addEventListener('click', addItemHandler);
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    var date = document.querySelector('.title_text');
+    var month = document.querySelector('.month');
+    var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var months = ["January", "February", "March", "April", "May", "June", 
+            "July", "August", "September", "October", "November", "December"];
+    dateNow = new Date();
+    var n = weekday[dateNow.getDay()];
+    var day = dateNow.getDate();
+    date.innerHTML =  n + "," + " " + day + 'th';
+    month.innerHTML = months[dateNow.getMonth()];
+    console.log(String(dateNow.getHours()) + ":" + String(dateNow.getMinutes()));
     var application = new Application();
-    application.model.todoList.push({ text: 'TEST', isCompleted: true });
+    // application.model.todoList.push({ text: 'TEST', isCompleted: true });
     application.start();
 });
 
@@ -78,178 +87,239 @@ class Application {
     }
 }
 
-class View {
-    model;
-    checklist;
-    addButton;
+// class View {
+//     model;
+//     checklist;
+//     addButton;
 
-    events = {};
+//     events = {};
 
-    // TODO
-    // OOP -> OOP in JS
+//     // TODO
+//     // OOP -> OOP in JS
 
-    // conjunctions замикання
-    // this and context
-    // lambda function
+//     // conjunctions замикання
+//     // this and context
+//     // lambda function
 
-    // types in JS
-    // value types vs reference types
+//     // types in JS
+//     // value types vs reference types
 
-    constructor(model) {
-        this.model = model;
-        this.checklist = document.querySelector('#checklist');
-        this.addButton = document.querySelector('#addbutton');
-        this.addButton.addEventListener('click', (e) => this.dispatch('add:todoItem', e));
-    }
+//     constructor(model) {
+//         this.model = model;
+//         // this.titleToDO = document.querySelector('.title_todo');
+//         this.checklist = document.querySelector('#checklist');
+//         this.addButton = document.querySelector('#addbutton');
+//         this.count = document.querySelector('.count');
+//         this.addButton.addEventListener('click', (e) => this.dispatch('add:todoItem', e));
+//     }
 
-    on(eventName, callback) {
-        if (!this.events[eventName]) {
-            this.events[eventName] = [];
-        }
+//     on(eventName, callback) {
+//         if (!this.events[eventName]) {
+//             this.events[eventName] = [];
+//         }
 
-        this.events[eventName].push(callback);
-    }
+//         this.events[eventName].push(callback);
+//     }
 
-    dispatch(eventName, event) {
-        if (this.events[eventName]) {
-            let subscribers = this.events[eventName];
-            for (let i = 0; i < subscribers.length; i++) {
-                subscribers[i](event);
-            }
-        }
-    }
+//     dispatch(eventName, event) {
+//         if (this.events[eventName]) {
+//             let subscribers = this.events[eventName];
+//             for (let i = 0; i < subscribers.length; i++) {
+//                 subscribers[i](event);
+//             }
+//         }
+      
+//     }
 
-    refreshView() {
-        this.checklist.innerHTML = "";
+//     refreshView() {
+//         this.checklist.innerHTML = "";
+//         console.log(this.model.todoList);
+       
+//         if(localStorage.getItem("Value")!= null){
+//             this.model.todoList = JSON.parse(localStorage.getItem("Value"))
+//             for (let i = 0; i < this.model.todoList.length; i++) {
+//                 let currentTodoItem = this.model.todoList[i];
+//                 this.renderTodoItem(currentTodoItem);
+//                 console.log(this.model.todoList);
+//                 localStorage.setItem("Value", JSON.stringify(this.model.todoList))
+//             }
+//         }else{
+//             this.model.todoList.push({ text: 'TEST', isCompleted: true });
+//             for (let i = 0; i < this.model.todoList.length; i++) {
+//                 let currentTodoItem = this.model.todoList[i];
+//                 this.renderTodoItem(currentTodoItem);
+//             }
+//             console.log(this.model.todoList);
+//             localStorage.setItem("Value", JSON.stringify(this.model.todoList))
+//         }
+//         if(this.model.todoList.length < 2 && this.model.todoList.length != 0){
+//             this.count.innerHTML = this.model.todoList.length + " " + "Task";
+//         }else if(this.model.todoList.length == 0){
+//             this.count.innerHTML = "0" + " " + "Tasks";
+//         }else{
+//             this.count.innerHTML = this.model.todoList.length + " " + "Tasks";
+//         }
+       
+//     };
 
-        for (let i = 0; i < this.model.todoList.length; i++) {
-            let currentTodoItem = this.model.todoList[i];
-            this.renderTodoItem(currentTodoItem);
-        }
-    };
+//     renderTodoItem(todoItem) {
+//         let todoItemContainer = document.createElement("div");
+//         todoItemContainer.className = "input-group mb-3";
 
-    renderTodoItem(todoItem) {
-        let todoItemContainer = document.createElement("div");
-        todoItemContainer.className = "input-group mb-3";
+//         let checkBoxWrapper = document.createElement('div');
+//         checkBoxWrapper.className = "input-group-text";
 
-        let checkBoxWrapper = document.createElement('div');
-        checkBoxWrapper.className = "input-group-text";
+//         let checkbox = document.createElement("input");
+//         checkbox.className = "form-check-input mt-0";
+//         checkbox.type = "checkbox";
+//         checkbox.attributes["aria-label"] = "Checkbox for following text input";
+//         checkbox.checked = todoItem.isCompleted;
+//         checkbox.addEventListener('click', (e) => this.dispatch('updateState:todoItem', {
+//             todoItem,
+//             newText: input.value,
+//             newState: checkbox.checked
+//         }));
+//         checkBoxWrapper.appendChild(checkbox);
 
-        let checkbox = document.createElement("input");
-        checkbox.className = "form-check-input mt-0";
-        checkbox.type = "checkbox";
-        checkbox.attributes["aria-label"] = "Checkbox for following text input";
-        checkbox.checked = todoItem.isCompleted;
-        checkbox.addEventListener('click', (e) => this.dispatch('update:todoItem', {
-            todoItem,
-            newText: input.value,
-            newState: checkbox.checked
-        }));
-        checkBoxWrapper.appendChild(checkbox);
+//         let input = document.createElement("input");
+//         input.type = "text";
+//         input.className = "form-control";
+//         input.placeholder = "Enter description here...";
+//         input.value = todoItem.text;
+//         input.addEventListener('keyup', (e) => this.dispatch('updateInput:todoItem', {
+//             todoItem,
+//             newText: input.value,
+//             newState: checkbox.checked
+//         }));
 
-        let input = document.createElement("input");
-        input.type = "text";
-        input.className = "form-control";
-        input.placeholder = "Enter description here...";
-        input.value = todoItem.text;
-        input.addEventListener('keyup', (e) => this.dispatch('update:todoItem', {
-            todoItem,
-            newText: input.value,
-            newState: checkbox.checked
-        }));
+//         // if (input.focus) {
+//         //     todoItemContainer.className = "input-group mb-3 activeInput";
+//         // }else{
+//         //     todoItemContainer.className = "input-group mb-3";
+//         // }
+//         input.onfocus = function(){
+//             todoItemContainer.className = "input-group mb-3 activeInput";
+//         }
+//         input.onblur = function(){
+//             todoItemContainer.className = "input-group mb-3";
+//         }
 
-        let button = document.createElement("button");
-        button.className = "btn btn-outline-secondary";
-        button.type = "button";
-        button.innerText = "Remove";
-        button.addEventListener('click', (e) => this.dispatch('delete:todoItem', todoItem));
+//         let button = document.createElement("button");
+//         // button.className = "btn btn-outline-secondary";
+//         button.className = "btn";
+//         button.type = "button";
+//         // button.innerText = "Remove";
+//         button.addEventListener('click', (e) => this.dispatch('delete:todoItem', todoItem));
 
-        todoItemContainer.appendChild(checkBoxWrapper);
-        todoItemContainer.appendChild(input);
-        todoItemContainer.appendChild(button);
-        checklist.appendChild(todoItemContainer);
+//         todoItemContainer.appendChild(checkBoxWrapper);
+//         todoItemContainer.appendChild(input);
+//         todoItemContainer.appendChild(button);
+//         checklist.appendChild(todoItemContainer);
 
-        let test = input.value;
-        console.log(test);
-    }
-    updateTodoItem(e) {
-        let val = e.value;
-        console.log(val);
-    }
+//         let test = input.value;
+//         console.log(test);
 
-}
+//         if(!todoItem.isCompleted){
+//             input.style.textDecoration = "none";   
+//             button.style.display = "none";
+//           }else if(todoItem.isCompleted && input.innerHTML != null){
+//             button.style.display = "block";
+//               input.style.textDecoration = "line-through";
+//               input.style.color = "#d9d9e7";
+//             //   input.style.color =  "#d9d9e7";
+//           }
 
-class Controller {
-    constructor(view, model) {
-        this.view = view;
-        this.model = model;
+       
+//     }
+//     updateTodoItem(e) {
+//         let val = e.value;
+//         console.log(val);
+//     }
 
-        this.view.on('add:todoItem', () => this.add());
-        this.view.on('delete:todoItem', (todoItem) => this.delete(todoItem));
-        this.view.on('update:todoItem', (todoItem) => this.update(todoItem)); ///////////////////////////??????????????????????
-    }
+// }
 
-    add() {
-        const todoItem = this.model.createItem();
-        this.view.renderTodoItem(todoItem);
-    }
+// class Controller {
+//     constructor(view, model) {
+//         this.view = view;
+//         this.model = model;
 
-    update(e) { /////////////////////////////////////////////////////????????????????????????????????????????????????????????????????
-        let todoItem = e.todoItem;
-        todoItem.text = e.newText
-        todoItem.isCompleted = e.newState;
-        this.model.updateItem(todoItem);
-    }
+//         this.view.on('add:todoItem', () => this.add());
+//         this.view.on('delete:todoItem', (todoItem) => this.delete(todoItem));
+//         this.view.on('updateState:todoItem', (todoItem) => this.updateState(todoItem)); ///////////////////////////??????????????????????
+//         this.view.on('updateInput:todoItem', (todoItem) => this.updateInput(todoItem));
+//     }
 
-    delete(todoItem) {
-        console.log(todoItem);
-        this.model.deleteItem(todoItem);
-        this.view.refreshView();
-    }
-}
+//     add() {
+//         const todoItem = this.model.createItem();
+//         this.view.renderTodoItem(todoItem);
+//         this.view.refreshView();
+//     }
+
+//     updateState(e) { /////////////////////////////////////////////////////????????????????????????????????????????????????????????????????
+//         let todoItem = e.todoItem;
+//         todoItem.text = e.newText
+//         todoItem.isCompleted = e.newState;
+//         this.model.updateItem(todoItem);
+//         this.view.refreshView()
+        
+//     }
+//     updateInput(e) { /////////////////////////////////////////////////////????????????????????????????????????????????????????????????????
+        
+//         let todoItem = e.todoItem;
+//         todoItem.text = e.newText
+//         todoItem.isCompleted = e.newState;
+//         this.model.updateItem(todoItem); 
+//     }
+
+//     delete(todoItem) {
+//         console.log(todoItem);
+//         this.model.deleteItem(todoItem);
+//         this.view.refreshView();
+//     }
+// }
 
 //let itemId = 0; 
-class Model {
-    todoList = [];
+// class Model {
+//     todoList = [];
 
 
-    constructor() {
-        var itemsKeys = Object.keys(localStorage);
-        for (let j = 0; j < itemsKeys.length; j++) {
-            this.todoList.push(JSON.parse(localStorage[itemsKeys[j]]));
-        }
-    }
+//     constructor() {
+//         var itemsKeys = Object.keys(localStorage);
+//         for (let j = 0; j < itemsKeys.length; j++) {
+//             this.todoList.push(JSON.parse(localStorage[itemsKeys[j]]));
+//         }
+//     }
 
 
-    /**
-     * Add todo item to the model
-     * @param {TodoListItem} todoItem 
-     */
-    createItem() {
-        let item = new TodoListItem();
-        this.todoList.push(item);
+//     /**
+//      * Add todo item to the model
+//      * @param {TodoListItem} todoItem 
+//      */
+//     createItem() {
+//         let item = new TodoListItem();
+//         this.todoList.push(item);
 
-        localStorage.setItem('Value', JSON.stringify(this.todoList));
-        return item;
-    }
+//         localStorage.setItem('Value', JSON.stringify(this.todoList));
+//         return item;
+//     }
 
-    deleteItem(item) {
-        const index = this.todoList.indexOf(item);
-        if (index > -1) {
-            this.todoList.splice(index, 1);
-            // save to local storage
-            localStorage.removeItem('Value');
-            localStorage.setItem('Value', JSON.stringify(this.todoList));
-        }
-    }
+//     deleteItem(item) {
+//         const index = this.todoList.indexOf(item);
+//         if (index > -1) {
+//             this.todoList.splice(index, 1);
+//             // save to local storage
+//             localStorage.removeItem('Value');
+//             localStorage.setItem('Value', JSON.stringify(this.todoList));
+//         }
+//     }
 
-    updateItem(item) {
-        localStorage.setItem('Value', JSON.stringify(this.todoList));
-    }
+//     updateItem(item) {
+//         localStorage.setItem('Value', JSON.stringify(this.todoList));
+//     }
 
-}
+// }
 
-class TodoListItem {
-    text = '';
-    isCompleted = false;
-}
+// class TodoListItem {
+//     text = '';
+//     isCompleted = false;
+// }
