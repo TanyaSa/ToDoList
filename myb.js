@@ -57,28 +57,37 @@ addButton.addEventListener('click', addItemHandler);
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    var date = document.querySelector('.title_text');
-    var month = document.querySelector('.month');
-    var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    var months = ["January", "February", "March", "April", "May", "June", 
-            "July", "August", "September", "October", "November", "December"];
+    var date = document.querySelectorAll('.title_text');
+    var month = document.querySelectorAll('.month');
+    var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var months = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
     dateNow = new Date();
     var n = weekday[dateNow.getDay()];
     var day = dateNow.getDate();
-    date.innerHTML =  n + "," + " " + day + 'th';
-    month.innerHTML = months[dateNow.getMonth()];
-    console.log(String(dateNow.getHours()) + ":" + String(dateNow.getMinutes()));
-    var application = new Application();
+
+    for (let i = 0; i < date.length; i++) {
+        date[i].innerHTML = n + "," + " " + day + 'th';
+        month[i].innerHTML = months[dateNow.getMonth()];
+        console.log(String(dateNow.getHours()) + ":" + String(dateNow.getMinutes()));
+    }
+    var application1 = new Application('first-todo');
+    var application2 = new Application('second-todo');
     // application.model.todoList.push({ text: 'TEST', isCompleted: true });
-    application.start();
+    application1.start();
+    application2.start();
+
 });
 
 
 class Application {
-    constructor() {
-        this.model = new Model();
-        this.view = new View(this.model);
+
+    constructor(containerId) {
+        this.model = new Model(containerId);
+        this.view = new View(this.model, containerId);
         this.controller = new Controller(this.view, this.model);
+
 
     }
 
@@ -128,13 +137,13 @@ class Application {
 //                 subscribers[i](event);
 //             }
 //         }
-      
+
 //     }
 
 //     refreshView() {
 //         this.checklist.innerHTML = "";
 //         console.log(this.model.todoList);
-       
+
 //         if(localStorage.getItem("Value")!= null){
 //             this.model.todoList = JSON.parse(localStorage.getItem("Value"))
 //             for (let i = 0; i < this.model.todoList.length; i++) {
@@ -159,7 +168,7 @@ class Application {
 //         }else{
 //             this.count.innerHTML = this.model.todoList.length + " " + "Tasks";
 //         }
-       
+
 //     };
 
 //     renderTodoItem(todoItem) {
@@ -229,7 +238,7 @@ class Application {
 //             //   input.style.color =  "#d9d9e7";
 //           }
 
-       
+
 //     }
 //     updateTodoItem(e) {
 //         let val = e.value;
@@ -261,10 +270,10 @@ class Application {
 //         todoItem.isCompleted = e.newState;
 //         this.model.updateItem(todoItem);
 //         this.view.refreshView()
-        
+
 //     }
 //     updateInput(e) { /////////////////////////////////////////////////////????????????????????????????????????????????????????????????????
-        
+
 //         let todoItem = e.todoItem;
 //         todoItem.text = e.newText
 //         todoItem.isCompleted = e.newState;

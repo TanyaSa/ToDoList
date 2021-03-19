@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <title>ToDO</title>
     <link rel="stylesheet" type="text/css" href="styleb.css" />
@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 
     <div class="outer_card">
-        <div class="inner_card">
+        <div id="first-todo" class="inner_card">
             <div class="title_todo">
                 <div class="date">
                     <div class="header_title">
@@ -24,14 +24,30 @@
                     </div>
                     <div class="month"></div>
                 </div>
-               
-                <button type="button"id="addbutton" class="addBtn"><div class="plus">&#43;</div></button>
+
+                <button type="button" class="addbutton addBtn"><div class="plus">&#43;</div></button>
             </div>
-            
-            <div id="checklist"></div>
+
+            <div class="checklist"></div>
+        </div>
+
+        <div id="second-todo" class="inner_card">
+            <div class="title_todo">
+                <div class="date">
+                    <div class="header_title">
+                        <h1 class="title_text"></h1>
+                        <div class="count"></div>
+                    </div>
+                    <div class="month"></div>
+                </div>
+
+                <button type="button" class="addbutton addBtn"><div class="plus">&#43;</div></button>
+            </div>
+
+            <div class="checklist"></div>
         </div>
     </div>
-        
+
     <script src="classes/todoItem.js"></script>
     <script src="classes/view.js"></script>
     <script src="classes/controller.js"></script>

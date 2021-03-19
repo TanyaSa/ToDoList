@@ -2,7 +2,8 @@ class Model {
     todoList = [];
 
 
-    constructor() {
+    constructor(containerId) {
+        this.containerId = containerId;
         var itemsKeys = Object.keys(localStorage);
         for (let j = 0; j < itemsKeys.length; j++) {
             let item = JSON.parse(localStorage[itemsKeys[j]]);
@@ -19,9 +20,9 @@ class Model {
     createItem() {
         let item = new TodoListItem();
         this.todoList.push(item);
-       
-        localStorage.setItem('Value', JSON.stringify(this.todoList));
-         return item;
+
+        localStorage.setItem(this.containerId, JSON.stringify(this.todoList));
+        return item;
     }
 
     deleteItem(item) {
@@ -29,13 +30,13 @@ class Model {
         if (index > -1) {
             this.todoList.splice(index, 1);
             // save to local storage
-            localStorage.removeItem('Value');
-            localStorage.setItem('Value', JSON.stringify(this.todoList));
+            localStorage.removeItem(this.containerId);
+            localStorage.setItem(this.containerId, JSON.stringify(this.todoList));
         }
     }
 
     updateItem(item) {
-        localStorage.setItem('Value', JSON.stringify(this.todoList));
+        localStorage.setItem(this.containerId, JSON.stringify(this.todoList));
         // console.log(this.todoList)
     }
 

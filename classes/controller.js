@@ -11,7 +11,7 @@ class Controller {
     add() {
         const todoItem = this.model.createItem();
         this.view.renderTodoItem(todoItem);
-        this.model.updateItem(todoItem); 
+        this.model.updateItem(todoItem);
         this.view.refreshView();
     }
 
